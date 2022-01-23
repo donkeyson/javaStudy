@@ -12,7 +12,13 @@ interface Predator {
   //스태틱 메서드 (인터페이스명.스태틱메서드명)
   static int speed() {
     return LEG_COUNT * 30
+  }
 }
+
+interface Barkable {
+  void bark();
+}
+
 
 class Animal {
   String name;
@@ -23,14 +29,21 @@ class Animal {
 }
 
 //implements
-class Tiger extends Animal implements Predator {
+class Tiger extends Animal implements Predator, Barkable {
   public String getFood() { //인터페이스 메소드는 public으로 구현
     return 'apple';
   }
+  
+  public void bark() {
+    System.out.println('어흥');
 }
-class Lion extends Anmimal implements Predator {
+  
+class Lion extends Anmimal implements Predator, Barkable {
   public String getFood() {
     return 'banana';
+  }
+  public void bark() {
+    System.out.println('으르렁');
 }
 
 class ZooKeeper {
@@ -39,6 +52,13 @@ class ZooKeeper {
   }
 }
 
+
+class Bouncer {
+  void barkAnimal(Barkable animal) {
+    animal.bark();
+  }
+}
+  
 public class Sample {
   public static void main(String[] args) {
     ZooKeeper zooKeeper = new ZooKeeper();
@@ -46,5 +66,9 @@ public class Sample {
     Lion lion = new Lion();
     zooKeeper.feed(tiger); //feed apple
     zooKeeper.feed(lion); //feed banana
+    
+    Bouncer bouncer = new Bouncer();
+    bouncer.barkAnimal(tiger); //어흥
+    bouncer.barkAnimal(lion); //으르렁
   }
 }
